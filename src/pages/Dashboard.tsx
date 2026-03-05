@@ -16,7 +16,21 @@ export default function Dashboard() {
     const [ cuentaAct, setCuentaAct ] = useState<string | null>(null)
     const [ posicion, setPosicion ] = useState<number>(0)
 
-    const last = cuentas.length
+    const last = cuentas.length - 1
+
+    const flechaLeft = () => {
+        const nuevaPosicion = posicion - 1
+        if (nuevaPosicion < 0) { return }
+        setPosicion(prev => prev - 1)
+        setCuentaAct(cuentas[nuevaPosicion].descripcion)
+    }
+
+    const flechaRight = () => {
+        const nuevaPosicion = posicion + 1
+        if (nuevaPosicion > last) return
+        setPosicion(prev => prev + 1)
+        setCuentaAct(cuentas[nuevaPosicion].descripcion)
+    }
 
     const handleSubmit = (e: React.FormEvent) => {
         if (!datos) { 
@@ -45,11 +59,15 @@ export default function Dashboard() {
             </div>
             <div className='acciones'>
             {cuentaAct && <p>Cuenta actual: {cuentaAct}</p>}
-            <button onClick={() => { posicion == 0 ? '' : setPosicion(prev => prev - 1)}}>{flechaI}</button>
-            <button onClick={() => setPosicion(prev => prev + 1)}>{flechaD}</button>
+            <button onClick={flechaLeft}>{flechaI}</button>
+            <button onClick={flechaRight}>{flechaD}</button>
             <button>Añadir</button>
             <button>Eliminar</button>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    handleSubmit
+                }
+            }}>
                 <button>Crear cuenta</button>
                 <input
                     type='text'
