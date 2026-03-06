@@ -25,3 +25,4 @@ dist-ssr
 *.json
 *vite.config.ts
 *node.json
+*eslint.config.js
