@@ -1,25 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-
-type Cuenta = {
-    descripcion: string,
-    cantidad: number,
-    id: number
-}
-
+import { useCuentas } from '../redux/hooks' 
+import { useDispatch } from 'react-redux'
 const flechaI = '<'
 const flechaD = '>'
 
 export default function Dashboard() {
+    const dispatch = useDispatch()
     const [ datos, setDatos ] = useState('')
-    const [ cuentas, setCuentas ] = useState<Cuenta[]>([])
     const [ cuentaAct, setCuentaAct ] = useState<string | null>(null)
     const [ posicion, setPosicion ] = useState<number>(0)
-
+    const cuentas = useCuentas()
     const last = cuentas.length - 1
 
     const flechaLeft = () => {
-        const nuevaPosicion = posicion - 1
+        const nuevaPosicion = posicion - 1 
         if (nuevaPosicion < 0) { return }
         setPosicion(prev => prev - 1)
         setCuentaAct(cuentas[nuevaPosicion].descripcion)
@@ -43,7 +38,7 @@ export default function Dashboard() {
             id: Date.now()
         }
         e.preventDefault()
-        setCuentas([...cuentas, nuevaCuenta])
+        dispatch
         setDatos('')
         setCuentaAct(nuevaCuenta.descripcion)
         setPosicion(prev => prev += 1)
@@ -65,7 +60,7 @@ export default function Dashboard() {
             <button>Eliminar</button>
             <form onSubmit={handleSubmit} onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                    handleSubmit
+                    handleSubmit(e)
                 }
             }}>
                 <button>Crear cuenta</button>
