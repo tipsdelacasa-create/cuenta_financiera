@@ -96,7 +96,7 @@ export default function Dashboard() {
 
     const navigate = useNavigate()
     return(
-        <div>
+        <div className='dashboard'>
             <h1>Dashboard</h1>
             <button onClick={() => navigate('/statistics')}>Ver estadísticas</button>
             <div className='InicioDashboard'>

@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 *.json
+*vite.config.ts
+*node.json
+*eslint.config.js
