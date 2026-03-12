@@ -6,9 +6,7 @@ interface Cuenta {
     descripcion: string;
 }
 
-const initialState: Cuenta[] = [{ id: 1, descripcion: "Banco", cantidad: 1000 },
-  { id: 2, descripcion: "Efectivo", cantidad: 200 }
-]
+const initialState: Cuenta[] = []
 
 const dineroCuentasSlice = createSlice({
     name: 'dineroCuentas',
@@ -30,7 +28,7 @@ const dineroCuentasSlice = createSlice({
             state.push(action.payload)
         },
         eliminarCuenta: (state, action) => {
-            state.splice(action.payload)
+            return state.filter(c => c.id !== action.payload)
         },
         editarDescripcion: (state, action) => {
             const cuenta = state.find(c => c.id === action.payload.id)
